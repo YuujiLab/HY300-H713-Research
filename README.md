@@ -1,5 +1,7 @@
 # HY300 Pro (Magcubic) – Allwinner H713 Research Documentation
 
+*Maintained by **[Yuuji Lab](https://github.com/YuujiLab)**.*
+
 ## 1. Overview
 This repository serves as the central engineering documentation and technical research base for the **HY300 / HY300 Pro / HY300 Pro+** projector platform, powered by the **Allwinner H713 SoC (`sun50iw12p1`)**.
 
