@@ -1,0 +1,24 @@
+# Flash images & raw partitions (avoid proprietary blobs / DMCA)
+*.img
+*.bin
+*.fex
+*.raw
+*.dump
+*.sparse
+
+# Compiled native binaries & libraries
+*.exe
+*.so
+*.o
+*.a
+*.elf
+
+# Backup & temporary files
+*.bak
+backup/
+
+# IDE & OS metadata
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

@@ -1,0 +1,214 @@
+=> help
+?       - alias for 'help'
+auto_update_check- auto_update_v2   - Do TFCard of Udisk update
+
+base    - print or set address offset
+bdinfo  - print Board Info structure
+boot    - boot default, i.e., run 'bootcmd'
+bootd   - boot default, i.e., run 'bootcmd'
+bootm   - boot application image from memory
+bootr   - boot application image from memory
+checkboard- set backlight
+cmp     - memory compare
+coninfo - print console devices and information
+cp      - memory copy
+crc32   - checksum calculation
+echo    - echo args to console
+editenv - edit environment variable
+efex    - run to efex
+env     - environment handling commands
+erase   - erase FLASH memory
+factory_test- factory test
+fastboot- fastboot - enter USB Fastboot protocol
+fatinfo - print information about filesystem
+fatload - load binary file from a dos filesystem
+fatls   - list files in a directory (default /)
+fatsize - determine a file's size
+fatwrite- write file into a dos filesystem
+fdt     - flattened device tree utility commands
+flinfo  - print FLASH memory information
+gpt     - GUID Partition Table
+help    - print command description/usage
+itest   - return true/false on integer compare
+key_test- Test the key value
+
+loadb   - load binary file over serial line (kermit mode)
+loads   - load S-Record file over serial line
+loadx   - load binary file over serial line (xmodem mode)
+loady   - load binary file over serial line (ymodem mode)
+loop    - infinite loop on address range
+md      - memory display
+memtester- start application at address 'addr'
+mm      - memory modify (auto-incrementing address)
+mmc     - MMC sub system
+mmcinfo - display MMC info
+mw      - memory write (fill)
+nm      - memory modify (constant address)
+part    - disk partition related commands
+pbread  - read data from private data
+printenv- print environment variables
+protect - enable or disable FLASH write protection
+pst     - read data from secure storageerase flag in secure storage
+pwm_led - pwm_led  - set pwm led
+
+reset   - Perform RESET of the CPU
+run     - run commands in an environment variable
+saveenv - save environment variables to persistent storage
+screen_char- show default screen chars
+set_working_fdt- set_working_fdt fdt_addr
+setenv  - set environment variables
+setexpr - set environment variable as the result of eval expression
+sleep   - delay execution for some time
+source  - run script from memory
+sprite_test- do a sprite test
+sunxi_card0_probe- probe sunxi card0 device
+sunxi_dma- do dma test
+sunxi_fel- do fel from boot
+sunxi_flash- sunxi_flash sub-system
+sunxi_mips- boot application image from memory
+sunxi_nand_test- sunxi_nand_test sub systerm
+sunxi_so- sunxi_so sub-system
+timer_test- do a timer and int test
+timer_test1- do a timer and int test
+uburn   - do a burn from boot
+usb     - USB sub-system
+usbboot - boot from USB device
+version - print monitor, compiler and linker version
+
+=> version
+U-Boot 2018.05-00027-ge159793 (Aug 15 2025 - 10:07:31 +0000) Allwinner Technology
+
+arm-linux-gnueabi-gcc (Linaro GCC 7.2-2017.11) 7.2.1 20171011
+GNU ld (Linaro_Binutils-2017.11) 2.28.2.20170706
+
+=> mmcinfo
+curr_device:2
+Device: SUNXI SD/MMC
+Manufacturer ID: 11
+OEM: 100
+Name: 008G3
+Bus Speed: 50000000
+Mode : MMC legacy
+Rd Block Len: 512
+MMC version 5.1
+High Capacity: Yes
+Capacity: 7.3 GiB
+Bus Width: 8-bit DDR
+Erase Group Size: 512 KiB
+HC WP Group Size: 4 MiB
+User Capacity: 7.3 GiB WRREL
+Boot Capacity: 4 MiB ENH
+RPMB Capacity: 4 MiB ENH
+
+=> bdinfo
+arch_number = 0x00000000
+boot_params = 0x40000100
+DRAM bank   = 0x00000000
+-> start    = 0x40000000
+-> size     = 0x40000000
+baudrate    = 115200 bps
+TLB addr    = 0x7FFF0000
+relocaddr   = 0x7FF0E000
+reloc off   = 0x35F0E000
+irq_sp      = 0x77E8DE60
+sp start    = 0x77E8BE50
+fdt_blob = 77e8de70
+
+=> printenv
+BOOTMODE=standby
+CEC_ENABLE=1
+CEC_WAKUP_ENABLE=1
+ColorDepth=8
+MEM_MODE=direct
+Mapping=0
+MirrorMode=0
+OddEven=0
+PanelAspectRatio=1
+PanelDCKLCurrent=7
+PanelDCLK=62000000
+PanelDECurrent=47
+PanelDualPort=0
+PanelEvenDataCurrent=7
+PanelHBP=40
+PanelHTotal=1360
+PanelHeight=720
+PanelHsync=20
+PanelHsyncPol=0
+PanelInvDCLK=1
+PanelInvDE=0
+PanelInvHSync=0
+PanelInvVSync=0
+PanelMaxHTotal=1360
+PanelMaxVTotal=760
+PanelMinHTotal=1360
+PanelMinVTotal=760
+PanelNoiseDith=1
+PanelODDDataCurrent=7
+PanelOffTiming0=20
+PanelOffTiming1=250
+PanelOffTiming2=75
+PanelOnTiming0=20
+PanelOnTiming1=550
+PanelOnTiming2=75
+PanelTimingWorkMode=2
+PanelVBP=20
+PanelVTotal=760
+PanelVsync=2
+PanelVsyncPol=0
+PanelWidth=1280
+PrimaryBx=1566
+PrimaryBy=381
+PrimaryGamma=22000
+PrimaryGx=3000
+PrimaryGy=6068
+PrimaryRx=6180
+PrimaryRy=3238
+PrimaryTMax=3199000
+PrimaryTMin=1228
+PrimaryWx=3127
+PrimaryWy=3290
+ProjectID=52
+SpreadSpectrumEnable=0
+SpreadSpectrumSpan=0
+SpreadSpectrumStep=10
+ab_partition_list=bootloader,env,boot,vendor_boot,dtbo,vbmeta,vbmeta_system,vbmeta_vendor,Reserve0
+boot_fastboot=fastboot
+boot_normal=sunxi_flash read 45000000 boot;bootm 45000000
+boot_recovery=sunxi_flash read 45000000 recovery;bootm 45000000
+bootcmd=run setargs_mmc boot_normal
+bootdelay=1
+cma=24M
+console=ttyS0,115200
+default_backlight=50
+dynamic_backlight=0
+earlyprintk=sunxi-uart,0x02500000
+fdtcontroladdr=77ebde70
+fileaddr=77f3c000
+filesize=4398
+force_normal_boot=1
+init=/init
+initcall_debug=0
+keybox_list=widevine,ec_key,ec_cert1,ec_cert2,ec_cert3,rsa_key,rsa_cert1,rsa_cert2,rsa_cert3,hdcpkey
+loglevel=4
+mmc_root=/dev/mmcblk0p5
+nand_root=/dev/nand0p5
+panel_config=panel_config.ini
+partitions=bootloader_a@mmcblk0p1:bootloader_b@mmcblk0p2:env_a@mmcblk0p3:env_b@mmcblk0p4:boot_a@mmcblk0p5:boot_b@mmcblk0p6:vendor_boot_a@mmcblk0p7:vendor_boot_b@mmcblk0p8:super@mmcblk0p9:misc@mmcblk0p10:vbmeta_a@mmcblk0p11:vbmeta_b@mmcblk0p12:vbmeta_system_a@mmcblk0p13:vbmeta_system_b@mmcblk0p14:vbmeta_vendor_a@mmcblk0p15:vbmeta_vendor_b@mmcblk0p16:frp@mmcblk0p17:empty@mmcblk0p18:metadata@mmcblk0p19:private@mmcblk0p20:dtbo_a@mmcblk0p21:dtbo_b@mmcblk0p22:media_data@mmcblk0p23:Reserve0_a@mmcblk0p24:Reserve0_b@mmcblk0p25:UDISK@mmcblk0p26
+prj_mode=prj_mode=0
+pwm_channel=5
+pwm_freq=40000
+pwm_max=100
+pwm_min=1
+pwm_polarity=1
+pwm_vs_lock=1
+setargs_mmc=setenv  bootargs earlyprintk=${earlyprintk} clk_ignore_unused initcall_debug=${initcall_debug} console=${console} loglevel=${loglevel} root=${mmc_root}  init=${init} cma=${cma} snum=${snum} mac_addr=${mac} wifi_mac=${wifi_mac} bt_mac=${bt_mac} specialstr=${specialstr} gpt=1 androidboot.force_normal_boot=${force_normal_boot} androidboot.slot_suffix=${slot_suffix} panel_config=${panel_config} slub_min_objects=${slub_min_objects}
+setargs_nand=setenv bootargs earlyprintk=${earlyprintk} clk_ignore_unused initcall_debug=${initcall_debug} console=${console} loglevel=${loglevel} root=${nand_root} init=${init} cma=${cma} snum=${snum} mac_addr=${mac} wifi_mac=${wifi_mac} bt_mac=${bt_mac} specialstr=${specialstr} gpt=1 androidboot.force_normal_boot=${force_normal_boot} androidboot.slot_suffix=${slot_suffix} panel_config=${panel_config}
+slot_suffix=_a
+slub_min_objects=4
+snum=HYTY62508092801
+trace_buf_size=64M
+trace_enable=0
+trace_event=sched_wakeup,sched_switch,sched_blocked_reason,sched_cpu_hotplug,block,ext4
+uboot_fdt_addr=77ebde70
+
+Environment size: 3510/131068 bytes
