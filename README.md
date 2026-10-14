@@ -80,8 +80,13 @@ Update protocol reverse engineering:
 - [x] Unverified `/oem` partition leveraged for custom splash screens, boot animations, and branding.
 - [x] OTA communication protocol reverse-engineered with working verification tools.
 
-## 5. Disclaimer
-The procedures, research documents, and code in this repository are intended for educational, technical, and security research purposes only. Modifying flash partitions, bootloaders, or system firmware carries risk of bricking. Always maintain full raw eMMC backups before applying modifications.
+## 5. Disclaimer & Liability Waiver
+
+The procedures, scripts, tools, and research documentation contained in this repository are provided strictly for educational, engineering, and security research purposes. 
+
+- **User Responsibility:** Modifying flash partitions, bootloaders, or low-level system firmware carries an inherent risk of soft-bricking, bootlooping, or permanently damaging (hard-bricking) your hardware. By following any guides or executing any commands found here, you assume sole responsibility for the outcome.
+- **No Warranty or Support Guarantee:** All materials are provided "as-is" without warranty of any kind, express or implied. The authors and contributors are not responsible for bricked devices, lost data, failed hardware, or voided warranties. Direct troubleshooting support is not guaranteed.
+- **Hardware Variation Notice:** White-label hardware platforms (including Magcubic / HY300 variants) frequently change board layouts, eMMC chips, and partition structures across production batches without notice. Always verify your own device's partition offsets and back up your complete raw storage (`mmcblk0`) before modifying any partition.
 
 ---
 *© Yuuji Lab. Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).*
