@@ -1,10 +1,10 @@
 # HY300 Pro eMMC Firmware Extraction & Dumping
 
 ## 1. Overview
-This guide documents the procedures for obtaining bit-exact physical dumps of the onboard 8GB eMMC flash memory and individual partitions on the HY300 / HY300 Pro projector (Allwinner H713 SoC). 
+This guide documents the procedures for obtaining bit-exact physical dump of the onboard 8GB eMMC flash memory on the HY300 / HY300 Pro projector (Allwinner H713 SoC). 
 
 > [!TIP]
-> **No Root Required for Extraction:** Testing confirms that unprivileged ADB shell sessions (`uid=2000`) retain direct read access to `/dev/block/` block devices and `/dev/block/by-name/` nodes due to permissive SELinux rules and open device permissions. **The `su` binary is NOT required to dump partitions or the complete eMMC image.**
+> **No Root Required for Extraction:** Testing confirms that unprivileged ADB shell sessions (`uid=2000`) retain direct read access to `/dev/block/` block device nodes due to permissive SELinux rules and open device permissions. **The `su` binary is NOT required to dump the complete eMMC image.**
 
 ## 2. Storage Geometry & Sector Layout
 - **Device Node:** `/dev/block/mmcblk0`
@@ -31,33 +31,23 @@ adb shell "dd if=/dev/block/mmcblk0 of=/storage/USB_DRIVE_ID/emmc_full.img bs=1M
 ```
 Expected output upon completion: `7818182656 bytes (7.8 GB, 7.3 GiB) copied`.
 
-## 4. Dumping Individual Partitions Directly
-Rather than carving from a full 7.8GB image, individual partitions can be dumped directly by name over unprivileged ADB:
-```bash
-# Dump boot_a partition directly to host
-adb exec-out "dd if=/dev/block/by-name/boot_a bs=1M status=none" > boot_a.img
-
-# Or dump directly to device storage (/sdcard)
-adb shell "dd if=/dev/block/by-name/boot_a of=/sdcard/Download/boot_a.img bs=1M"
-```
-
-## 5. Verification & Partition Inspection
+## 4. Verification & Partition Inspection
 Validate the dump integrity on a Linux workstation using GPT utilities:
 ```bash
 gdisk -l emmc_full.img
 ```
 Confirm the GPT header reports valid backup tables at the end of the image and lists partitions `bootloader_a` through `userdata` without corruption.
 
-## 6. Carving Specific Partitions
+## 5. Carving Specific Partitions
 If extracting from a full image instead of live dumping:
 ```bash
 # Example: Carve boot_a (Start sector 205824, size 64MB = 131072 sectors of 512 bytes)
 dd if=emmc_full.img of=boot_a.img bs=512 skip=205824 count=131072
 ```
 
-## 7. Summary Findings
+## 6. Summary Findings
 - Full eMMC images measure exactly 7,818,182,656 bytes.
-- Standard ADB shell sessions have direct read access to `/dev/block/mmcblk0` and `/dev/block/by-name/*` without root (`su`).
+- Standard ADB shell sessions have direct read access to `/dev/block/mmcblk0` without root (`su`).
 - Individual partitions such as `boot_a` can be extracted directly over ADB for Magisk patching on completely unrooted stock devices.
 - Backing up `mmcblk0` ensures full recovery capability via FEL mode or fastboot.
 

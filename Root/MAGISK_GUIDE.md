@@ -9,7 +9,7 @@ This procedure details the method for achieving stable root access on the HY300 
 ## 2. Prerequisites
 - ADB and Fastboot platform-tools configured on host workstation.
 - Magisk APK (v24.0 or higher recommended).
-- **No external firmware package or prior root required**: The stock `boot_a` image can be dumped directly over unprivileged ADB.
+- **No external firmware package or prior root required**: The raw eMMC block device `/dev/block/mmcblk0` is world-readable (`0666`), allowing partition dumps directly over unprivileged ADB.
 
 ## 3. Step-by-Step Procedure
 
@@ -20,16 +20,35 @@ adb shell getprop ro.boot.slot_suffix
 ```
 The returned output is `_a`. Target partition is strictly `boot_a`.
 
-### Step 2: Extract Stock `boot_a.img` via ADB (No Root Required)
-Due to permissive SELinux and open block device read permissions on the Allwinner H713 firmware, standard ADB shell sessions (`uid=2000`) have direct read access to `/dev/block/by-name/`. The `su` command is **not required**.
+### Step 2: Carve Stock `boot_a.img` via ADB (No Root Required)
+Individual partition device nodes (`/dev/block/mmcblk0p*` and `/dev/block/by-name/*`) are permission-locked to `root:root (0600)`. However, the raw parent storage block (`/dev/block/mmcblk0`) has world-readable permissions (`0666`), allowing an unprivileged shell (`uid=2000`) to carve out partitions directly.
 
-1. Dump `boot_a` directly to internal device storage:
+1. Locate partition 5 (`boot_a`) starting sector and sector count:
    ```bash
-   adb shell "dd if=/dev/block/by-name/boot_a of=/sdcard/Download/boot_a.img bs=1M"
+   adb shell "cat /sys/block/mmcblk0/mmcblk0p5/start && cat /sys/block/mmcblk0/mmcblk0p5/size"
    ```
-2. Pull a backup copy to your host computer for safe recovery:
+*Expected output: Two numbers, representing sector offset (e.g., `205824`) and size (e.g., `131072`).*
+
+2. Carve `boot_a` directly from the raw device to your host machine:
    ```bash
-   adb pull /sdcard/Download/boot_a.img boot_a_stock_backup.img
+   adb exec-out "dd if=/dev/block/mmcblk0 bs=512 skip=<START> count=<SIZE> status=none" > boot_a.img
+   ```
+*(Replace `<START>` and `<SIZE>` with the numbers returned in the previous command).*
+
+3. Make an untouched backup copy on your workstation:
+   ```bash
+   # Windows PowerShell
+   Copy-Item .\boot_a.img .\boot_a_stock_backup.img
+   # Linux/macOS
+   cp boot_a.img boot_a_stock_backup.img
+   ```
+   
+4. Verify image integrity (header must begin with `ANDROID!`):
+   ```bash
+   # Windows PowerShell
+   Format-Hex -Path .\boot_a.img -Count 8
+   # Linux/macOS
+   head -c 8 boot_a.img
    ```
 
 ### Step 3: Patch Boot Image via Magisk App
@@ -37,8 +56,12 @@ Due to permissive SELinux and open block device read permissions on the Allwinne
    ```bash
    adb install Magisk.apk
    ```
-2. Open the Magisk app on the projector UI, select **Install** -> **Select and Patch a File**, and choose `/sdcard/Download/boot_a.img`.
-3. Once patching finishes, pull the patched boot image to the host:
+2. Push the dumped `boot_a.img` to device storage:
+   ```bash
+   adb push boot_a.img /sdcard/Download/boot_a.img
+   ```
+3. Open the Magisk app on the projector, select **Install** -> **Select and Patch a File**, and choose `/sdcard/Download/boot_a.img`.
+4. Pull the patched image back to your host machine:
    ```bash
    adb pull /sdcard/Download/magisk_patched_*.img boot_a_patched.img
    ```
@@ -83,7 +106,7 @@ If the device fails to complete boot or experiences a bootloop:
 
 ## 5. Summary Findings
 - Magisk systemless root functions stably on the Allwinner H713 32-bit userspace / 64-bit kernel environment.
-- Unprivileged ADB shell (`uid=2000`) has direct read access to `/dev/block/by-name/boot_a`, eliminating the need for external firmware dumps or pre-existing root to obtain the boot image.
+- Sub-partitions under `/dev/block/mmcblk0p*` are restricted to `0600` (root-only), but the main disk `/dev/block/mmcblk0` is world-readable (`0666`), enabling reliable host carving without existing root or external firmware packages.
 - The A/B partition scheme is Virtual A/B with functional data restricted to slot A.
 - Recovery and rollbacks must be conducted by flashing the stock `boot_a` backup directly to `boot_a`.
 
