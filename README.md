@@ -39,11 +39,12 @@ Early boot chain analysis and bootloader modifications:
 - **[Fastboot & Security Research](Boot/FASTBOOT_RESEARCH.md):** AVB status, Fastboot HAL OEM commands (`efex`), and userspace `fastbootd` Ghidra binary patch (`0x28cc8`).
 - **[U-Boot Reverse Engineering](Boot/UBOOT_RESEARCH.md):** Disassembly findings, linker command tables, and script-driven boot control.
 
-### [Firmware Analysis](Firmware/README.md)
-Partition structure and raw storage acquisition:
+### [Firmware Analysis & Flashing](Firmware/README.md)
+Partition structure, raw storage acquisition, and offline USB flashing:
 - **[Partition Layout & GPT](Firmware/PARTITION_LAYOUT.md):** Complete 26-partition map, Virtual A/B architecture (Slot A functional, Slot B fake/zero-filled), dynamic volumes, and runtime mounts.
 - **[System Firmware Analysis](Firmware/SYSTEM_ANALYSIS.md):** Build fingerprint, engineering tools, permissive SELinux, and hidden `/system/bin/wifi` UART SUID root binary.
-- **[eMMC Firmware Extraction](Firmware/EMMC_DUMPING.md):** Raw 7.8GB eMMC and individual partition dumping via unprivileged ADB (no root required), GPT verification, and carving.
+- **[eMMC Firmware Extraction](Firmware/EMMC_DUMPING.md):** Raw 7.8GB eMMC partition dumping via unprivileged ADB (no root required), GPT verification, and carving.
+- **[USB Burn-In & Secure Storage](Firmware/USB_BURN_GUIDE.md):** Automated USB recovery flashing (`auto_update_check`), Allwinner Secure Storage (`pst`) anti-rollback bypass, timestamp backdating, and sprite engine troubleshooting.
 
 ### [Recovery & Exploit Chains](Recovery/README.md)
 Recovery subsystem reverse engineering and automated payload delivery:
@@ -78,6 +79,7 @@ Update protocol reverse engineering:
 - [x] Stock recovery patched (`0x00030220`) to restore legacy ZIP execution and dynamic partition loop-mounting.
 - [x] Complete 26-partition GPT hierarchy mapped; Virtual A/B reality confirmed (Slot A active, Slot B fake/zero-filled).
 - [x] Unverified `/oem` partition leveraged for custom splash screens, boot animations, and branding.
+- [x] Allwinner Secure Storage (SST / `pst`) anti-rollback mechanism bypassed, enabling USB burn-in flashing and version downgrading.
 - [x] OTA communication protocol reverse-engineered with working verification tools.
 
 ## 5. Disclaimer & Liability Waiver

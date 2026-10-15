@@ -12,6 +12,7 @@ The HY300 / HY300 Pro projector platform (Allwinner H713 SoC) supports multiple 
 | **Fastboot** | Bootloader Fastboot | U-Boot environment script | Low-level raw partition flashing |
 | **Fastbootd** | Userspace Fastboot | Recovery subservice | Dynamic partition (`super`) management |
 | **FEL Mode** | Allwinner BootROM | Vol+ IR key / `fastboot oem efex` | Low-level USB flashing & unbricking |
+| **USB Burn / Sprite** | Allwinner Sprite Engine | FAT32 USB drive on cold boot (`auto_update_check`) | Automated offline firmware flashing & unbricking (see [USB Burn Guide](../Firmware/USB_BURN_GUIDE.md)) |
 
 ## 3. Infrared (IR) Key Triggers in U-Boot
 IR remote key monitoring is integrated directly into U-Boot before the display initializes. The bootloader polls the IR receiver register during early initialization:

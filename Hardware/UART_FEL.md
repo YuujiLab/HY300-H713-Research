@@ -32,6 +32,7 @@ Serial interaction was successfully established and verified. Live console acces
   - `md` / `mw` / `mm`: Inspect, write, and modify memory and hardware registers directly.
   - `sunxi_flash`: Direct low-level read/write operations against eMMC block partitions.
   - `gpt`: GUID Partition Table management.
+  - `pst`: Inspect and override Allwinner Secure Storage keys (e.g., `firmware_version` anti-rollback timestamp; see [USB Burn Guide](../Firmware/USB_BURN_GUIDE.md)).
 
 A complete console log transcript is archived in [UART Log](uart_log.txt).
 

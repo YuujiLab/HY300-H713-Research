@@ -16,13 +16,14 @@ The device boot flow progresses through the following sequential stages:
 
 1. **BootROM (BROM):** Low-level hardware ROM executing on SoC reset. Supports FEL recovery over USB (`1f3a:efe8`).
 2. **SPL (boot0):** Secondary program loader responsible for DRAM initialization and hardware timing setup.
-3. **U-Boot:** Main bootloader executing in RAM. Reads `/oem/bootlogo.bmp`, evaluates IR remote triggers, and runs the script defined in `bootcmd`.
+3. **U-Boot:** Main bootloader executing in RAM. Reads `/oem/bootlogo.bmp`, evaluates IR remote triggers, checks for USB firmware updates (`auto_update_check`), and runs the script defined in `bootcmd`.
 4. **Android Kernel (`boot_a`):** Decompresses and initializes hardware drivers and mounts dynamic partitions.
 5. **Userspace Init & Services:** Launches Android framework services, including `bootanimation` and the `fastbootd` recovery subservice.
 
 ## 4. Reverse Engineering & Binary Modifications
 - **Userspace `fastbootd` Lock Bypass:** Ghidra analysis and binary patching details for overriding `GetDeviceLockStatus()` are documented in [FASTBOOT_RESEARCH.md](FASTBOOT_RESEARCH.md).
 - **OEM Partition Decoupling:** Visual assets and device branding are decoupled from the boot partition and stored on the writable `/oem` partition (see [OEM Documentation](../OEM/README.md)).
+- **Secure Storage & USB Flashing:** Anti-rollback timestamp bypass (`pst`) and USB drive sprite recovery procedures are documented in [USB Burn Guide](../Firmware/USB_BURN_GUIDE.md).
 
 ---
 *© Yuuji Lab. Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).*

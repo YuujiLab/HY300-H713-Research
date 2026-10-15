@@ -21,13 +21,13 @@ This guide documents the procedures for obtaining bit-exact physical dump of the
 ### Method A: Streaming Directly over ADB to Host (No Root Required)
 Stream the raw block device across an ADB tunnel directly to a host workstation:
 ```bash
-adb exec-out "dd if=/dev/block/mmcblk0 bs=1M status=none" > emmc_full.img
+adb exec-out "dd if=/dev/block/mmcblk0 bs=1M" > emmc_full.img
 ```
 
 ### Method B: Dumping to Connected USB Storage
 If a FAT32 or NTFS formatted USB storage drive is connected to the projector:
 ```bash
-adb shell "dd if=/dev/block/mmcblk0 of=/storage/USB_DRIVE_ID/emmc_full.img bs=1M status=progress"
+adb shell "dd if=/dev/block/mmcblk0 of=/storage/USB_DRIVE_ID/emmc_full.img bs=1M"
 ```
 Expected output upon completion: `7818182656 bytes (7.8 GB, 7.3 GiB) copied`.
 
